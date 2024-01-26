@@ -32,3 +32,8 @@ Route::get("/greet/{name}/", function ($name) {
 Route::get("/private", function () {
     return "Made repo Private!!";
 });
+
+// fallback route
+Route::fallback(function(){
+    return "This is fallback url-you are LOST!!";
+});
