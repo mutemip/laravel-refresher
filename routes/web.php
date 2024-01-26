@@ -27,3 +27,7 @@ Route::get("/helo", function () {
 Route::get("/greet/{name}/", function ($name) {
     return "Hello " . $name . "!";
 });
+
+Route::get("/private", function () {
+    return "Made repo Private!!";
+});
