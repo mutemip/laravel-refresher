@@ -18,10 +18,11 @@ Route::get('/', function () {
 });
 Route::get("/hello", function () {
     return "This is hello page.";
-});
+})->name("hello-route"); //naming routes
+
 // retiring a url
 Route::get("/helo", function () {
-    return redirect("/hello");
+    return redirect()->route("hello-route"); //redirecting to named route
 });
 
 Route::get("/greet/{name}/", function ($name) {
