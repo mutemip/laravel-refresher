@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Response;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,29 +66,45 @@ $tasks = [
     ),
 ];
 
-Route::get('/', function () use($tasks){
+Route::get('/', function(){
+    return redirect()->route('tasks.index');
+});
+
+Route::get('/tasks', function () use($tasks){
     return View("index", 
     // ["name"=>"Mutemi"]
     ["tasks"=>$tasks]);
-});
-Route::get("/hello", function () {
-    return "This is hello page.";
-})->name("hello-route"); //naming routes
+})->name("tasks.index");
 
-// retiring a url
-Route::get("/helo", function () {
-    return redirect()->route("hello-route"); //redirecting to named route
-});
 
-Route::get("/greet/{name}/", function ($name) {
-    return "Hello " . $name . "!";
-});
+Route::get("tasks/{id}", function($id) use($tasks){
+    $task = collect($tasks)->firstWhere('id', $id);
+    if (!$task){
+        abort(Response::HTTP_NOT_FOUND);
+    }
+    return  view("show", ["task"=>$task]);
+})->name("tasks.show");
 
-Route::get("/private", function () {
-    return "Made repo Private!!";
-});
 
 // fallback route
 Route::fallback(function(){
     return "This is fallback url-you are LOST!!";
-});
+})->name("fallback");
+
+
+// Route::get("/hello", function () {
+//     return "This is hello page.";
+// })->name("hello-route"); //naming routes
+
+// // retiring a url
+// Route::get("/helo", function () {
+//     return redirect()->route("hello-route"); //redirecting to named route
+// });
+
+// Route::get("/greet/{name}/", function ($name) {
+//     return "Hello " . $name . "!";
+// });
+
+// Route::get("/private", function () {
+//     return "Made repo Private!!";
+// });
