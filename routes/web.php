@@ -70,15 +70,17 @@ Route::get('/', function(){
     return redirect()->route('tasks.index');
 });
 
-Route::get('/tasks', function () use($tasks){
-    return View("index", 
-    // ["name"=>"Mutemi"]
-    ["tasks"=>$tasks]);
-})->name("tasks.index");
+// Route::get('/tasks', function () use($tasks){
+//     return View("index", 
+//     // ["name"=>"Mutemi"]
+//     ["tasks"=>$tasks]);
+// })->name("tasks.index");
 
-// Route::get('/tasks', function(){
-//     $tasks = \App\Models\Tas
-// });
+// read  data from tasks models/db
+Route::get('/tasks', function(){
+    // $tasks = \App\Models\Task::all();
+    return View('index', ['tasks'=>\App\Models\Task::latest()->get()]);
+})->name("tasks.index");
 
 
 // Route::get("tasks/{id}", function($id) use($tasks){
@@ -89,6 +91,8 @@ Route::get('/tasks', function () use($tasks){
 //     return  view("show", ["task"=>$task]);
 // })->name("tasks.show");
 
+
+# retrieve specific  task by id using route model binding (implicit binding)
 Route::get("tasks/{id}", function($id) {
     // $task=\App\Models\Task ::find($id);
     // if (!$task){
