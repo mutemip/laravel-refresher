@@ -76,13 +76,25 @@ Route::get('/tasks', function () use($tasks){
     ["tasks"=>$tasks]);
 })->name("tasks.index");
 
+// Route::get('/tasks', function(){
+//     $tasks = \App\Models\Tas
+// });
 
-Route::get("tasks/{id}", function($id) use($tasks){
-    $task = collect($tasks)->firstWhere('id', $id);
-    if (!$task){
-        abort(Response::HTTP_NOT_FOUND);
-    }
-    return  view("show", ["task"=>$task]);
+
+// Route::get("tasks/{id}", function($id) use($tasks){
+//     $task = collect($tasks)->firstWhere('id', $id);
+//     if (!$task){
+//         abort(Response::HTTP_NOT_FOUND);
+//     }
+//     return  view("show", ["task"=>$task]);
+// })->name("tasks.show");
+
+Route::get("tasks/{id}", function($id) {
+    // $task=\App\Models\Task ::find($id);
+    // if (!$task){
+    //     abort(Response::HTTP_NOT_FOUND);
+    // }
+    return View("show",['task'=>\App\Models\Task ::findorFail($id)]);
 })->name("tasks.show");
 
 
